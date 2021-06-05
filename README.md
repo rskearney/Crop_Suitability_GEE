@@ -5,9 +5,9 @@ According to the United Nations (U.N.), an estimated 925 million people are suff
 The objective of this project is to indentify areas with the optimal environmental conditions for growing sweet corn. The study area for this project is the United States. Optimal suitability is mapped using historic and future climate data to illustrate how climate change will impact which area are expected to have optimal suitability in the future. The results will indicate which areas have histoically had the optimal environmental conditions for growing sweet corn and if they are expected to persist in the future. Areas where the optimal environmental conditions are not expected to persitst may want to consider planting different cultivars or crop species. In the end, the results are intended to inform farmers in the identified areas about the potential climate change impacts and prepare them for these impacts. 
 
 ## Methods:
-The crop suitability model was developed using Google Earth Engine (GEE). GEE is a web-based software that runs in your browser and is free for those who have a google account and sign up for it. GEE allows users to generate code using the Javascript programming language to do geographic analysis on publicly available datasets stored in Google's cloud platform. Since much of the analysis entails repeating the same process using differnet climate datasets, I will focus on the main methods and how they differ when using differnet climate datasets. 
+The crop suitability model was developed using Google Earth Engine (GEE). GEE is a web-based software that runs in your browser and is free for those who have a google account and sign up for it. GEE allows users to generate code using the Javascript programming language to do geographic analysis on publicly available datasets stored in Google's cloud platform. Much of the analysis entails repeating the same process using current and future climate data, rather than explain what every line does, I will instead focus on the how the methods differ when using different climate datasets. 
 
-To begin, the climate and soil data is loaded into GEE.
+The first step involves importing the climate and soil data into GEE and preparing the data so that they are in the proper units. The climate variables being considered in this suitability model are annual precipitation (mm), monthly mean temperature (celcius), and monthly minimum temperature (celcius). The minimum and mean temperature bands in the PRISM image collection do not need to be converted because they are represented as degrees celcius. However, PRISM the precipitation band represents monthly precipitation and annual precipitation is required. 
 
 ```Java
 // Load Climate Data
@@ -15,12 +15,8 @@ To begin, the climate and soil data is loaded into GEE.
 var precip_band = ee.ImageCollection("OREGONSTATE/PRISM/Norm81m").select("ppt");
 var tmin_band = ee.ImageCollection("OREGONSTATE/PRISM/Norm81m").select("tmin");
 var tmean_band = ee.ImageCollection("OREGONSTATE/PRISM/Norm81m").select("tmean");
-
-//Load Soil PH Data
-
-var soil_band = ee.Image("projects/soilgrids-isric/phh2o_mean").select("phh2o_0-5cm_mean");
 ```
-Notice that only annual precipitation total, monthly mean temperature, monthly minimum temperature, and soil Ph are considered.
+
 
 When loading in future climate scenario's different methods are used to prepare the data. Below is the method used for preparing the temperature data.
 
