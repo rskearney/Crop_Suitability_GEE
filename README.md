@@ -1,2 +1,6 @@
-# Crop_Suitability_GEE
-This repository contains the final report for New Methods in Earth Observation
+# Crop Suitability Modeling using GEE
+## Introduction:
+## Methods:
+## Results:
+## Discussion and Conclusions:
+## Future Work:
