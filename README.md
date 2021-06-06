@@ -7,7 +7,7 @@ The objective of this project is to indentify areas with the optimal environment
 ## Methods:
 The crop suitability model was developed using Google Earth Engine (GEE). GEE is a web-based software that runs in your browser and is free for those who have a google account and sign up for it. GEE allows users to generate code using the Javascript programming language to do geographic analysis on publicly available datasets stored in Google's cloud platform. Much of the analysis entails repeating the same process using current and future climate data, rather than explain what every line does, I will instead focus on the how the methods differ when using different climate datasets. 
 
-The first step involves importing the climate and soil data into GEE and preparing the data so that they are in the proper units. The climate variables being considered in this suitability model are annual precipitation (mm), monthly mean temperature (celcius), and monthly minimum temperature (celcius). The minimum and mean temperature bands in the PRISM image collection do not need to be converted because they are represented as degrees celcius. However, PRISM the precipitation band represents monthly precipitation and annual precipitation is required. 
+The first step involves importing the climate and soil data into GEE and preparing the data so that they are in the proper units. The climate variables being considered in this suitability model are annual precipitation (mm), monthly mean temperature (celcius), and monthly minimum temperature (celcius). The minimum and mean temperature bands in the PRISM image collection do not need to be converted because they are represented as degrees celcius. However, the PRISM precipitation band represents monthly precipitation and annual precipitation is required. 
 
 ```Java
 // Load Climate Data
@@ -15,8 +15,23 @@ The first step involves importing the climate and soil data into GEE and prepari
 var precip_band = ee.ImageCollection("OREGONSTATE/PRISM/Norm81m").select("ppt");
 var tmin_band = ee.ImageCollection("OREGONSTATE/PRISM/Norm81m").select("tmin");
 var tmean_band = ee.ImageCollection("OREGONSTATE/PRISM/Norm81m").select("tmean");
+
+//Load soil Ph data
+var soil_band = ee.Image("projects/soilgrids-isric/phh2o_mean").select("phh2o_0-5cm_mean");
 ```
 
+The minimum and mean temperature bands in the PRISM image collection do not need to be converted because they are represented as degrees celcius. However, the PRISM precipitation band represents monthly precipitation and annual precipitation is required. A reducer is used to calculate the sum of all monthly precipitation images.
+
+```Java
+//Calculate annual precipitation
+var total_precip = precip_band.reduce(ee.Reducer.sum());
+```
+The soil data in it's native format represents soil Ph x 10, but for this analysis, soil Ph is needed. As such, Soil Ph is divided by 10. 
+
+```Java
+//Divide soil Ph band by 10
+var divide_soil_10 = soil_band.divide(10);
+```
 
 When loading in future climate scenario's different methods are used to prepare the data. Below is the method used for preparing the temperature data.
 
