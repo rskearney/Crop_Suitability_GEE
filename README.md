@@ -235,7 +235,7 @@ Map.addLayer(
 ## Results:
 After running the code, 4 images are added to the map. One image represents the current suitability and is based on the PRISM climate data. The other three are 3 different future climate scenarios. By changing the basemap to the satelite imagery and adjusting the transparency of the suitability layers, the results can be validated using a simple visual inspection. The results overlay quite nicely with current crop land. Furthermore, when compared to crop land cover data (included as an optional layer in the script), it is clear that corn is grown in the areas currently have the optimal suitability. Together, the visual inspection of the results indicates that the model is functioning properly and identifying areas where corn is grown. 
 
-![](image)
+![VisualInspection](https://github.com/rskearney/Crop_Suitability_GEE/blob/main/Documents/Images/Visual_inspection.PNG?raw=true)
 
 ## Discussion and Conclusions:
 In terms of the implications of these results, it is clear that some areas that currently have the optimal conditions, may not have them in the future. This has the potential to have a serious impact on corn farmers in these areas and could require a different strategy. Furthermore, this analysis identifies some areas where the optimal conditions are expected to persist in multiple future climate scenarios. In the end, climate change is expected to improve suitability in some areas and diminish it in others. GEE allows users to compare multiple environmental datasets, adjust crop parameters, climate scenarios, and future time periods. This allows the code to be addapted for particular crops and geographies quite easily. 
